@@ -1,0 +1,1130 @@
+/* Refined Barber Lounge & Cafe — Variant A, "The Crest"
+   Built from the only brand asset they own: the gold heraldic crest on black.
+   Palette is measured, not invented (data/recon-photos.json > brand.colors).
+   Zero external requests: system font stacks only, no CDN, no web fonts. */
+
+:root {
+  /* Ground — their logo ground is effectively pure black; lifted a hair so the
+     gold hairlines have something to sit on. */
+  --ink: #080807;
+  --ink-2: #100F0D;
+  --ink-3: #191713;
+
+  /* Measured brand gold. Nothing brighter than #D4AF37 — it reads cheap beside
+     the crest foil. */
+  --gold: #bfa769;
+  --gold-lift: #e8d9a8;
+  --gold-deep: #675b43;
+
+  /* Warm white sampled off the shop wall. */
+  --cream: #e4e2d8;
+  --cream-dim: #aba79a;
+
+  --line: rgba(191, 167, 105, 0.3);
+  --line-soft: rgba(191, 167, 105, 0.16);
+
+  --display: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua",
+    Georgia, "Times New Roman", serif;
+  --body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+
+  /* 1.25 modular scale, fluid at the display end. */
+  --t--1: 0.875rem;
+  --t-0: 1.0625rem;
+  --t-1: 1.3rem;
+  --t-2: 1.6rem;
+  --t-3: clamp(1.75rem, 1.45rem + 1.3vw, 2.35rem);
+  --t-h1: clamp(1.85rem, 1.15rem + 3vw, 3.25rem);
+
+  --s-1: 0.5rem;
+  --s-2: 1rem;
+  --s-3: 1.75rem;
+  --s-4: clamp(2.5rem, 5vw, 4rem);
+  --s-5: clamp(4rem, 9vw, 7.5rem);
+
+  --wrap: 66rem;
+  --measure: 58ch;
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Semantic z-scale. */
+  --z-sticky: 20;
+  --z-skip: 40;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--cream);
+  font: var(--t-0) / 1.7 var(--body);
+  text-rendering: optimizeLegibility;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: var(--gold-lift);
+  text-underline-offset: 0.22em;
+  text-decoration-thickness: from-font;
+}
+
+a:hover {
+  color: var(--cream);
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold-lift);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding-inline: clamp(1.15rem, 4vw, 2.5rem);
+}
+
+.skip {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, -120%);
+  z-index: var(--z-skip);
+  background: var(--gold);
+  color: #0a0a0a;
+  padding: 0.6rem 1.1rem;
+  font: 600 var(--t--1) / 1 var(--body);
+  text-decoration: none;
+}
+
+.skip:focus {
+  transform: translate(-50%, 0);
+}
+
+/* ---------- Type ---------- */
+
+h1,
+h2,
+h3 {
+  font-family: var(--display);
+  font-weight: 400;
+  letter-spacing: -0.012em;
+  line-height: 1.14;
+  text-wrap: balance;
+  margin: 0;
+}
+
+h1 {
+  font-size: var(--t-h1);
+  line-height: 1.06;
+}
+
+h2 {
+  font-size: var(--t-3);
+}
+
+h3 {
+  font-size: var(--t-1);
+  line-height: 1.25;
+}
+
+p {
+  margin: 0 0 var(--s-2);
+  text-wrap: pretty;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+.lede {
+  font-size: var(--t-1);
+  line-height: 1.55;
+  color: var(--cream);
+}
+
+.dim {
+  color: var(--cream-dim);
+}
+
+.small {
+  font-size: var(--t--1);
+  line-height: 1.6;
+}
+
+/* The one label style in the system — used for the crest sub-line and table
+   captions only, never as a per-section eyebrow. */
+.gold {
+  color: var(--gold);
+}
+
+/* Unresolved facts render visibly. This is the point: he can see exactly what
+   is still owed before anything goes live. */
+.tbd {
+  background: rgba(191, 167, 105, 0.14);
+  color: var(--gold-lift);
+  border: 1px dashed var(--line);
+  border-radius: 2px;
+  padding: 0.05em 0.4em;
+  font-family: var(--body);
+  font-size: 0.9em;
+  font-style: normal;
+  white-space: nowrap;
+}
+
+/* ---------- The crest motifs ---------- */
+
+/* Dot-and-circle border lifted off the roundel edge of their logo. */
+.rule {
+  height: 7px;
+  margin: var(--s-4) auto;
+  max-width: 22rem;
+  background-image: radial-gradient(
+    circle at center,
+    var(--gold) 0 1.6px,
+    transparent 1.7px
+  );
+  background-size: 13px 7px;
+  background-repeat: repeat-x;
+  background-position: center;
+  opacity: 0.75;
+}
+
+.rule--tight {
+  margin: var(--s-3) auto;
+  max-width: 12rem;
+}
+
+.hair {
+  border: 0;
+  border-top: 1px solid var(--line-soft);
+  margin: var(--s-4) 0;
+}
+
+.crest {
+  display: block;
+  width: clamp(44px, 11vw, 62px);
+  height: auto;
+  margin-inline: auto;
+}
+
+/* ---------- Header ---------- */
+
+.masthead {
+  border-bottom: 1px solid var(--line-soft);
+  background: linear-gradient(180deg, #010101, var(--ink));
+  padding-block: clamp(1rem, 3.5vw, 1.75rem) var(--s-2);
+  text-align: center;
+}
+
+.brand {
+  display: inline-block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.brand__name {
+  display: block;
+  font-family: var(--display);
+  font-size: clamp(1.15rem, 0.95rem + 0.9vw, 1.5rem);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-top: 0.7rem;
+}
+
+.brand__sub {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+  margin-top: 0.45rem;
+}
+
+.nav {
+  margin-top: clamp(1rem, 3vw, 1.75rem);
+}
+
+.nav ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.2rem clamp(0.75rem, 3vw, 2.1rem);
+  margin: 0;
+  padding: 0;
+}
+
+.nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.4rem 0.15rem;
+  color: var(--cream);
+  text-decoration: none;
+  font-size: clamp(0.78rem, 0.6rem + 0.5vw, 0.875rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-bottom: 1px solid transparent;
+  transition: color 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+
+.nav a:hover {
+  color: var(--gold-lift);
+  border-bottom-color: var(--line);
+}
+
+.nav a[aria-current="page"] {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+/* ---------- Sections ---------- */
+
+main {
+  display: block;
+}
+
+section {
+  padding-block: var(--s-5);
+}
+
+section + section {
+  padding-top: 0;
+}
+
+.center {
+  text-align: center;
+}
+
+.prose {
+  max-width: var(--measure);
+  margin-inline: auto;
+}
+
+.prose--wide {
+  max-width: 72ch;
+}
+
+.stack > * + * {
+  margin-top: var(--s-2);
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  padding-block: clamp(2.75rem, 7vw, 5.5rem) var(--s-4);
+  text-align: center;
+}
+
+.hero__grid {
+  display: grid;
+  gap: var(--s-4);
+  align-items: center;
+}
+
+@media (min-width: 62rem) {
+  .hero__grid {
+    grid-template-columns: 1.05fr 0.95fr;
+    text-align: left;
+    gap: clamp(2.5rem, 5vw, 4.5rem);
+  }
+
+  .hero .rule {
+    margin-inline: 0;
+  }
+}
+
+.hero h1 {
+  margin-bottom: var(--s-2);
+}
+
+.hero__where {
+  font-family: var(--display);
+  font-size: var(--t-1);
+  color: var(--gold);
+  margin-bottom: 0.35rem;
+}
+
+.hero__when {
+  color: var(--cream-dim);
+  margin-bottom: var(--s-3);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  justify-content: center;
+}
+
+@media (min-width: 62rem) {
+  .actions {
+    justify-content: flex-start;
+  }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.75rem 1.6rem;
+  border: 1px solid var(--gold);
+  background: var(--gold);
+  color: #0a0a0a;
+  font: 600 var(--t--1) / 1 var(--body);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color 0.25s var(--ease), color 0.25s var(--ease),
+    transform 0.25s var(--ease);
+}
+
+.btn:hover {
+  background: var(--gold-lift);
+  border-color: var(--gold-lift);
+  color: #0a0a0a;
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn .tbd {
+  margin-left: 0.5em;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--gold);
+}
+
+.btn--ghost:hover {
+  background: rgba(191, 167, 105, 0.12);
+  color: var(--gold-lift);
+}
+
+/* ---------- Framed photography ---------- */
+
+.frame {
+  position: relative;
+  margin: 0;
+  border: 1px solid var(--line);
+  padding: 8px;
+  background: var(--ink-2);
+}
+
+.frame::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border: 1px solid var(--line-soft);
+  pointer-events: none;
+}
+
+.frame img {
+  width: 100%;
+  filter: saturate(0.94) contrast(1.03);
+  transition: filter 0.4s var(--ease);
+}
+
+.frame:hover img {
+  filter: saturate(1) contrast(1.06);
+}
+
+.frame figcaption {
+  padding: 0.7rem 0.2rem 0.1rem;
+  font-size: var(--t--1);
+  line-height: 1.5;
+  color: var(--cream-dim);
+  text-align: center;
+}
+
+.frame--tall img {
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: clamp(0.9rem, 2.5vw, 1.6rem);
+}
+
+/* ---------- Pull quote ---------- */
+
+.quote {
+  max-width: 46ch;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.quote blockquote {
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(1.35rem, 1rem + 1.7vw, 2.1rem);
+  line-height: 1.34;
+  color: var(--cream);
+  text-wrap: balance;
+}
+
+.quote cite {
+  display: block;
+  margin-top: var(--s-2);
+  font-style: normal;
+  font-size: var(--t--1);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ---------- Tables: hours and menus ---------- */
+
+.panel {
+  border: 1px solid var(--line-soft);
+  background: var(--ink-2);
+  padding: clamp(1.25rem, 3.5vw, 2.25rem);
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--t--1);
+}
+
+caption {
+  caption-side: top;
+  text-align: left;
+  padding-bottom: 0.75rem;
+  color: var(--cream-dim);
+  font-size: var(--t--1);
+}
+
+th,
+td {
+  padding: 0.62rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--line-soft);
+  vertical-align: top;
+}
+
+thead th {
+  color: var(--gold);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 0.76rem;
+  white-space: nowrap;
+}
+
+tbody tr:last-child th,
+tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+tbody th {
+  font-weight: 400;
+  color: var(--cream);
+}
+
+td.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--gold-lift);
+}
+
+td.dur {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--cream-dim);
+}
+
+/* ---------- Two-up ---------- */
+
+.duo {
+  display: grid;
+  gap: clamp(1.25rem, 3.5vw, 2.5rem);
+}
+
+@media (min-width: 48rem) {
+  .duo {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.duo--photo {
+  align-items: start;
+}
+
+/* ---------- Service list ---------- */
+
+.services {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--line-soft);
+}
+
+.service {
+  border-bottom: 1px solid var(--line-soft);
+  padding-block: var(--s-3);
+  display: grid;
+  gap: 0.35rem 1.5rem;
+}
+
+@media (min-width: 48rem) {
+  .service {
+    grid-template-columns: 15rem 1fr;
+    align-items: baseline;
+  }
+}
+
+.service h3 {
+  font-size: var(--t-1);
+  color: var(--gold-lift);
+  margin: 0;
+}
+
+.service p {
+  margin: 0;
+  color: var(--cream-dim);
+  max-width: 62ch;
+}
+
+/* ---------- Barber sections ---------- */
+
+.barber {
+  padding-top: var(--s-4);
+}
+
+.barber__head {
+  text-align: center;
+}
+
+.barber__meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem 1.4rem;
+  margin: var(--s-2) 0 var(--s-3);
+  padding: 0;
+  list-style: none;
+  font-size: var(--t--1);
+  color: var(--cream-dim);
+}
+
+.barber__meta b {
+  color: var(--cream);
+  font-weight: 600;
+}
+
+/* ---------- Booking routes ---------- */
+
+.route {
+  border: 1px solid var(--line-soft);
+  background: var(--ink-2);
+  padding: clamp(1.4rem, 4vw, 2.4rem);
+  text-align: center;
+}
+
+.route h2 {
+  margin-bottom: var(--s-1);
+}
+
+.route .btn {
+  margin-top: var(--s-3);
+}
+
+.route__note {
+  margin-top: var(--s-2);
+  font-size: var(--t--1);
+  color: var(--cream-dim);
+}
+
+/* ---------- FAQ ---------- */
+
+.faq {
+  max-width: 72ch;
+  margin-inline: auto;
+  border-top: 1px solid var(--line-soft);
+}
+
+.faq details {
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.faq summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 1.1rem 2.5rem 1.1rem 0;
+  position: relative;
+  font-family: var(--display);
+  font-size: var(--t-1);
+  line-height: 1.3;
+  color: var(--cream);
+  transition: color 0.2s var(--ease);
+}
+
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq summary:hover {
+  color: var(--gold-lift);
+}
+
+.faq summary::after {
+  content: "+";
+  position: absolute;
+  right: 0.35rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--body);
+  font-size: 1.35rem;
+  line-height: 1;
+  color: var(--gold);
+}
+
+.faq details[open] summary {
+  color: var(--gold);
+}
+
+.faq details[open] summary::after {
+  content: "\2212";
+}
+
+.faq p {
+  margin: 0 0 1.25rem;
+  color: var(--cream-dim);
+  max-width: 68ch;
+}
+
+/* ---------- Footer ---------- */
+
+.foot {
+  border-top: 1px solid var(--line-soft);
+  background: #010101;
+  padding-block: var(--s-4);
+  text-align: center;
+  margin-top: var(--s-5);
+}
+
+.foot__grid {
+  display: grid;
+  gap: var(--s-3);
+  justify-items: center;
+}
+
+@media (min-width: 48rem) {
+  .foot__grid {
+    grid-template-columns: repeat(3, 1fr);
+    align-items: start;
+  }
+}
+
+.foot h2 {
+  font-size: var(--t--1);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-family: var(--body);
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.foot address {
+  font-style: normal;
+  line-height: 1.75;
+}
+
+.foot address a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.foot ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.foot li a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.foot a {
+  color: var(--cream);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.foot a:hover {
+  color: var(--gold-lift);
+  border-bottom-color: var(--gold);
+}
+
+.colophon {
+  margin-top: var(--s-4);
+  font-size: 0.78rem;
+  color: #918c80;
+}
+
+/* ---------- Mobile action bar ----------
+   A barbershop is a phone-first business. Two actions, always in reach. */
+
+.bar {
+  position: sticky;
+  bottom: 0;
+  z-index: var(--z-sticky);
+  display: flex;
+  gap: 1px;
+  background: var(--line-soft);
+  border-top: 1px solid var(--gold-deep);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.bar a {
+  flex: 1;
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0d0c0a;
+  color: var(--gold);
+  text-decoration: none;
+  font: 600 var(--t--1) / 1 var(--body);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.bar a + a {
+  background: var(--gold);
+  color: #0a0a0a;
+}
+
+@media (min-width: 48rem) {
+  .bar {
+    display: none;
+  }
+}
+
+/* ---------- Motion ----------
+   One page-load reveal on the hero. Everything else is already visible; the
+   animation only softens the arrival. */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+.hero__copy > *,
+.hero__art {
+  animation: rise 0.7s var(--ease) both;
+}
+
+.hero__copy > *:nth-child(2) {
+  animation-delay: 0.06s;
+}
+
+.hero__copy > *:nth-child(3) {
+  animation-delay: 0.12s;
+}
+
+.hero__copy > *:nth-child(4) {
+  animation-delay: 0.18s;
+}
+
+.hero__art {
+  animation-delay: 0.1s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .btn:hover {
+    transform: none;
+  }
+}
+
+@media print {
+  .bar,
+  .nav,
+  .skip {
+    display: none;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+}
+
+/* ---------- Generated atmosphere (site-assets/generated, gemini-3-pro-image) ----------
+   Backgrounds, textures and light only. Nothing here depicts a person or a cut —
+   every photo of the craft on this site is their own work. */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: url("../assets/generated/a-tex-crest-border.jpg");
+  background-size: 460px;
+  opacity: .085;
+}
+
+.hero {
+  background-image:
+    linear-gradient(rgba(8, 8, 7, .88), rgba(8, 8, 7, .94)),
+    url("../assets/generated/a-bg-crest-vignette.jpg");
+  background-size: cover;
+  background-position: 50% 40%;
+}
+
+.foot {
+  background-image:
+    linear-gradient(rgba(1, 1, 1, .90), rgba(1, 1, 1, .95)),
+    url("../assets/generated/a-atm-gold-haze.jpg");
+  background-size: cover;
+  background-position: 50% 50%;
+}
+
+/* Service icons (src/icons.py). Inline SVG, currentColor. */
+.svc-icon { display: block; width: 24px; height: 24px; color: var(--gold); margin: 0 0 .6rem; }
+
+/* ---------- Textured bands ----------
+   Rhythm between blocks. Generated atmosphere sits under a near-black wash so
+   it reads as texture; it is never a photograph of this shop. Bands that carry
+   no image are pure CSS — the gold-haze gradient is the fallback where the
+   asset library came up short. */
+
+.band {
+  border-block: 1px solid var(--line-soft);
+  background-color: var(--ink-2);
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}
+
+/* section + section zeroes top padding; a band needs its own box back. */
+section + section.band,
+section.band + section {
+  padding-top: var(--s-5);
+}
+
+.band--lounge {
+  background-image: linear-gradient(rgba(4, 4, 3, 0.955), rgba(4, 4, 3, 0.975)),
+    url("../assets/generated/a-int-waiting-area.jpg");
+}
+
+.band--chair {
+  background-image: linear-gradient(rgba(4, 4, 3, 0.95), rgba(4, 4, 3, 0.975)),
+    url("../assets/generated/a-int-empty-chair.jpg");
+}
+
+.band--mirror {
+  background-image: linear-gradient(rgba(4, 4, 3, 0.945), rgba(4, 4, 3, 0.97)),
+    url("../assets/generated/a-int-mirror-counter.jpg");
+}
+
+.band--tools {
+  background-image: linear-gradient(rgba(4, 4, 3, 0.93), rgba(4, 4, 3, 0.965)),
+    url("../assets/generated/a-tool-brushes-combs.jpg");
+}
+
+.band--haze {
+  background-image: linear-gradient(rgba(3, 3, 3, 0.9), rgba(3, 3, 3, 0.95)),
+    url("../assets/generated/a-atm-gold-haze.jpg");
+}
+
+/* ponytail: no asset behind this one — layered gradients only. Same rhythm,
+   zero bytes. Used where the generated library ran out. */
+.band--plain {
+  background-image:
+    radial-gradient(120% 80% at 50% 0%, rgba(191, 167, 105, 0.09), transparent 62%),
+    linear-gradient(180deg, #050504, var(--ink-2) 55%, #050504);
+}
+
+/* ---------- Lookbook ----------
+   Their own cuts, nothing else. Uniform tiles so the work is compared like for
+   like and no single photo gets promoted over another. */
+
+/* ponytail: CSS columns, not grid. Four of these seven photos carry the shop's
+   own caption overlay burned in; a fixed aspect-ratio crop cut through the
+   words. Columns let every frame keep its native ratio, so nothing is sliced
+   mid-sentence and no gaps open at the end of a row. */
+.lookbook {
+  columns: 2;
+  column-gap: clamp(0.6rem, 2vw, 1.15rem);
+}
+
+@media (min-width: 46rem) {
+  .lookbook {
+    columns: 4;
+  }
+}
+
+.lookbook .frame {
+  padding: 5px;
+  break-inside: avoid;
+  margin-bottom: clamp(0.6rem, 2vw, 1.15rem);
+}
+
+.lookbook img {
+  width: 100%;
+}
+
+/* ponytail: one photo was posted with its caption banner already cut off at
+   the frame edge. Trim the dead strip in CSS rather than re-encoding their
+   asset — the crop is display-only and the file stays untouched. */
+.lookbook .frame--crop img {
+  aspect-ratio: 1284 / 1500;
+  object-fit: cover;
+  object-position: 50% 0;
+}
+
+.lookbook figcaption {
+  padding: 0.55rem 0.2rem 0.15rem;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  text-align: left;
+}
+
+/* ---------- Still-life plates (generated assets) ----------
+   Deliberately narrower and cooler than .frame so a still life never reads as
+   documentary. Every plate carries a caption saying what it is. */
+
+.plate {
+  background: #060605;
+}
+
+.plate img {
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  filter: saturate(0.88) contrast(1.04) brightness(0.97);
+}
+
+.plate figcaption {
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  color: #8b8578;
+}
+
+.plate--wide img {
+  aspect-ratio: 21 / 9;
+}
+
+/* A row of decorative stills. Purely a divider — no captions, no claims. */
+.strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+  margin-block: var(--s-4);
+  border: 1px solid var(--line-soft);
+  padding: 3px;
+  background: var(--ink-2);
+}
+
+.strip img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  filter: saturate(0.7) contrast(1.02) brightness(0.72);
+}
+
+/* ---------- Status pill ----------
+   The cafe is not open. Say so where the eye lands first. */
+
+.soon {
+  display: inline-block;
+  margin-left: 0.45em;
+  padding: 0.2em 0.75em;
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  color: var(--gold);
+  font: 600 0.7rem / 1.6 var(--body);
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+/* ---------- Stacked figures ----------
+   Two photos in one column of a .duo, for the barber pages. */
+
+.pair {
+  display: grid;
+  gap: clamp(0.6rem, 2vw, 1rem);
+}
+
+/* ---------- Service icons: keep the row aligned once every card has one ----
+   Three children per service (icon, h3, p) so one row per service on desktop.
+   On phones the icon sits beside the name and the description spans the row. */
+
+.service {
+  grid-template-columns: 1.75rem 1fr;
+  align-items: center;
+}
+
+.service p {
+  grid-column: 1 / -1;
+  margin-top: 0.35rem;
+}
+
+@media (min-width: 48rem) {
+  .service {
+    grid-template-columns: 1.75rem 13.25rem 1fr;
+    align-items: baseline;
+  }
+
+  .service p {
+    grid-column: auto;
+    margin-top: 0;
+  }
+}
+
+.service .svc-icon {
+  margin: 0;
+}

@@ -1,0 +1,669 @@
+/* Refined Barber Lounge & Cafe — Variant C, "Lounge Warmth".
+   Palette is measured off his own assets: gold #BFA769 and its shadow #675B43
+   (logo), warm skin/wood #CBAA93 and terrazzo #D2CEBB (the room). The ground is
+   that gold shadow taken down to espresso — warm dark, lamp-lit, the hang before
+   the cut. No web fonts, no CDN, no script: system stacks only. */
+
+:root {
+  --ground: #241d17;
+  --ground-deep: #191411;
+  --surface: #2f251d;
+  --surface-hi: #3b2f25;
+  --ink: #f4ece0;
+  --ink-soft: #cdbba4;
+  --gold: #bfa769;
+  --gold-hi: #e8d9a8;
+  --clay: #cbaa93;
+  --paper: #e5ded0;
+  --paper-ink: #241d17;
+  --paper-soft: #4d3f30;
+  --paper-accent: #5a4326;
+  --hair: rgba(191, 167, 105, .3);
+  --hair-paper: rgba(90, 67, 38, .28);
+
+  --serif: Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --r-sm: 10px;
+  --r: 18px;
+  --r-lg: 26px;
+  --shell: min(1160px, 100% - 2.5rem);
+  --band: clamp(3.25rem, 7vw, 6.5rem);
+
+  --z-header: 20;
+}
+
+* { box-sizing: border-box; }
+
+/* ponytail: no scroll-behavior:smooth — it breaks programmatic scrolls,
+   which is how the lazy images and the deploy screenshots get triggered. */
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background-color: var(--ground);
+  /* Lamp glow + a terrazzo-fine speckle. Texture without a single request. */
+  background-image:
+    radial-gradient(120% 70% at 78% -8%, rgba(191, 167, 105, .17), transparent 60%),
+    radial-gradient(90% 55% at 0% 8%, rgba(203, 170, 147, .09), transparent 62%),
+    radial-gradient(circle at 12% 22%, rgba(226, 214, 190, .045) 0 1.1px, transparent 1.2px),
+    radial-gradient(circle at 63% 71%, rgba(226, 214, 190, .04) 0 1.3px, transparent 1.4px),
+    radial-gradient(circle at 88% 41%, rgba(203, 170, 147, .05) 0 1px, transparent 1.1px);
+  background-size: 100% 100%, 100% 100%, 190px 190px, 230px 230px, 150px 150px;
+  background-attachment: scroll;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 1.0625rem;
+  line-height: 1.68;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+a { color: var(--gold-hi); text-decoration-thickness: 1px; text-underline-offset: .18em; }
+a:hover { color: var(--ink); }
+
+:focus-visible {
+  outline: 2px solid var(--gold-hi);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+h1, h2, h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -.015em;
+  text-wrap: balance;
+  margin: 0 0 .5em;
+}
+
+h1 { font-size: clamp(2rem, 3.4vw + 1.1rem, 3.4rem); }
+h2 { font-size: clamp(1.5rem, 1.5vw + 1rem, 2.15rem); }
+h3 { font-size: clamp(1.15rem, .6vw + .95rem, 1.4rem); }
+
+p { margin: 0 0 1.1rem; max-width: 68ch; text-wrap: pretty; }
+
+.shell { width: var(--shell); margin-inline: auto; }
+
+.skip {
+  position: absolute;
+  left: -9999px;
+}
+.skip:focus {
+  left: 1rem; top: .6rem;
+  z-index: calc(var(--z-header) + 1);
+  background: var(--gold);
+  color: #201a14;
+  padding: .6rem 1rem;
+  border-radius: var(--r-sm);
+}
+
+/* ---------- header ---------- */
+
+.site-head {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  background: var(--ground-deep);
+  border-bottom: 1px solid var(--hair);
+}
+
+.site-head .shell {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .4rem 1.5rem;
+  padding: .85rem 0;
+}
+
+.mark {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  line-height: 1.25;
+}
+.mark span { display: block; font-size: .68rem; letter-spacing: .3em; color: var(--gold); }
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem 1.35rem;
+  margin-left: auto;
+  font-size: .95rem;
+}
+/* .55rem block padding takes each nav link to a 44px tap target on mobile. */
+.nav a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  padding: .55rem 0;
+  border-bottom: 1px solid transparent;
+  transition: color .25s cubic-bezier(.22, 1, .36, 1), border-color .25s cubic-bezier(.22, 1, .36, 1);
+}
+.nav a:hover { color: var(--ink); border-color: var(--gold); }
+.nav a[aria-current="page"] { color: var(--gold-hi); border-color: var(--gold); }
+
+/* ---------- buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  min-height: 48px;
+  padding: .8rem 1.5rem;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform .3s cubic-bezier(.22, 1, .36, 1), background-color .3s, color .3s, border-color .3s;
+}
+.btn-primary { background: var(--gold); color: #201a14; }
+.btn-primary:hover { background: var(--gold-hi); color: #201a14; transform: translateY(-2px); }
+.btn-ghost { border: 1px solid var(--hair); color: var(--ink); }
+.btn-ghost:hover { border-color: var(--gold); color: var(--gold-hi); transform: translateY(-2px); }
+.paper .btn-ghost { border-color: var(--hair-paper); color: var(--paper-ink); }
+.paper .btn-ghost:hover { border-color: var(--paper-accent); color: var(--paper-accent); }
+
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem 1rem;
+  align-items: center;
+  margin: 1.6rem 0 0;
+}
+
+.chip {
+  display: inline-block;
+  border: 1px solid var(--hair);
+  border-radius: 999px;
+  padding: .45rem 1rem;
+  font-size: .9rem;
+  color: var(--ink-soft);
+}
+
+/* ---------- bands ---------- */
+
+.band { padding: var(--band) 0; }
+.band + .band { border-top: 1px solid rgba(191, 167, 105, .14); }
+.paper {
+  background: var(--paper);
+  color: var(--paper-ink);
+  border-top: none;
+}
+.paper h1, .paper h2, .paper h3 { color: var(--paper-ink); }
+.paper a { color: var(--paper-accent); }
+.paper a:hover { color: var(--paper-ink); }
+.paper .lede, .paper .fig-cap, .paper .muted { color: var(--paper-soft); }
+.paper .chip { border-color: var(--hair-paper); color: var(--paper-soft); }
+.paper :focus-visible { outline-color: var(--paper-accent); }
+
+.lede { font-size: 1.15rem; color: var(--ink-soft); max-width: 62ch; }
+.muted { color: var(--ink-soft); }
+.small { font-size: .92rem; }
+
+/* ---------- hero ---------- */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--hair);
+}
+.hero-media { position: absolute; inset: 0; }
+.hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
+.hero-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(25, 20, 17, .74) 0%, rgba(25, 20, 17, .5) 48%, rgba(36, 29, 23, .92) 100%),
+    linear-gradient(100deg, rgba(36, 29, 23, .96) 10%, rgba(36, 29, 23, .84) 40%, rgba(36, 29, 23, .22) 84%);
+}
+.hero .shell {
+  position: relative;
+  padding: clamp(3.5rem, 9vw, 7.5rem) 0 clamp(3rem, 7vw, 5.5rem);
+}
+.hero-copy { max-width: 44rem; }
+.hero h1 { margin-bottom: .55rem; max-width: 15ch; }
+.hero .lede { margin-bottom: 0; max-width: 34ch; }
+.hero-facts {
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: .35rem;
+  color: var(--ink-soft);
+  font-size: .98rem;
+}
+.hero-facts { max-width: 42ch; }
+.hero-facts strong { color: var(--ink); font-weight: 600; }
+
+.rise { animation: rise .8s cubic-bezier(.16, 1, .3, 1) both; }
+.rise-2 { animation-delay: .1s; }
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---------- quote ---------- */
+
+.quote {
+  margin: 0;
+  max-width: 30ch;
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 2.4vw + .9rem, 2.6rem);
+  line-height: 1.28;
+  letter-spacing: -.02em;
+  text-wrap: balance;
+}
+.quote-wrap {
+  display: grid;
+  gap: clamp(1.25rem, 4vw, 3.5rem);
+  grid-template-columns: 1fr;
+  align-items: end;
+}
+.quote cite { font-style: normal; font-size: .95rem; color: var(--paper-soft); }
+
+/* ---------- prose flow ---------- */
+
+.flow { display: grid; gap: clamp(2rem, 4vw, 3.25rem); }
+.flow-2 { grid-template-columns: 1fr; }
+.qa h2 { margin-bottom: .35rem; }
+.qa p:last-child { margin-bottom: 0; }
+
+/* ---------- figures ---------- */
+
+figure { margin: 0; }
+.fig img {
+  border-radius: var(--r);
+  border: 1px solid var(--hair);
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  width: 100%;
+}
+.fig-wide img { aspect-ratio: 3 / 2; }
+.fig-cap {
+  margin: .7rem 0 0;
+  font-family: var(--serif);
+  font-size: .95rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  max-width: 46ch;
+}
+.fig-cap b { font-weight: 400; font-style: italic; color: var(--clay); }
+.paper .fig-cap b { color: var(--paper-accent); }
+.paper .fig img { border-color: var(--hair-paper); }
+
+.gallery {
+  display: grid;
+  gap: clamp(1rem, 2.5vw, 1.75rem);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+/* ---------- panels ---------- */
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--hair);
+  border-radius: var(--r-lg);
+  padding: clamp(1.4rem, 3vw, 2.25rem);
+}
+.paper .panel {
+  background: rgba(255, 255, 255, .5);
+  border-color: var(--hair-paper);
+}
+.panel h3 { margin-top: 0; }
+.panel > :last-child { margin-bottom: 0; }
+
+.pair {
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 2rem);
+  grid-template-columns: 1fr;
+}
+
+/* ---------- menus / tables ---------- */
+
+.menu {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .98rem;
+  margin: 0 0 1rem;
+}
+.menu caption {
+  text-align: left;
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  padding-bottom: .6rem;
+  color: inherit;
+}
+.menu th, .menu td {
+  text-align: left;
+  padding: .6rem .75rem .6rem 0;
+  border-bottom: 1px solid var(--hair);
+  vertical-align: top;
+}
+.paper .menu th, .paper .menu td { border-bottom-color: var(--hair-paper); }
+.menu th { font-weight: 600; color: var(--ink-soft); font-size: .85rem; letter-spacing: .04em; }
+.paper .menu th { color: var(--paper-soft); }
+.menu td + td, .menu th + th { text-align: right; padding-right: 0; white-space: nowrap; }
+.table-scroll { overflow-x: auto; }
+
+/* ---------- service anchors ---------- */
+
+.services-list { display: grid; gap: 1.25rem; margin: 0; }
+.services-list > div {
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--hair-paper);
+}
+.services-list > div:last-child { border-bottom: none; padding-bottom: 0; }
+.services-list h3 { margin-bottom: .25rem; }
+.services-list p { margin-bottom: .25rem; }
+
+/* ---------- barber sections ---------- */
+
+/* Every anchor target clears the sticky header. */
+[id] { scroll-margin-top: 5.5rem; }
+.barber + .barber { margin-top: var(--band); padding-top: var(--band); border-top: 1px solid var(--hair); }
+.barber-grid {
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+.stat-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem .75rem;
+  padding: 0;
+  margin: 0 0 1.2rem;
+  list-style: none;
+}
+.stat-line li {
+  border: 1px solid var(--hair);
+  border-radius: 999px;
+  padding: .35rem .9rem;
+  font-size: .88rem;
+  color: var(--ink-soft);
+}
+.paper .stat-line li { border-color: var(--hair-paper); color: var(--paper-soft); }
+
+/* ---------- faq ---------- */
+
+.faq { display: grid; gap: 1.75rem; }
+.faq h3 { margin-bottom: .3rem; }
+.faq p { margin-bottom: 0; }
+
+/* ---------- footer ---------- */
+
+.site-foot {
+  background: var(--ground-deep);
+  border-top: 1px solid var(--hair);
+  padding: var(--band) 0 3rem;
+}
+.foot-grid {
+  display: grid;
+  gap: 2rem clamp(1.5rem, 4vw, 3rem);
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+}
+.foot-grid h2 {
+  font-family: var(--sans);
+  font-size: .8rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: .8rem;
+}
+.foot-grid ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .45rem; }
+/* Underlined, not colour-only: footer link colour sits at 1.5:1 against the
+   plain text beside it, so the underline is the only thing that marks it as a
+   link. Block padding takes it to a 44px tap target. */
+.foot-grid a {
+  color: var(--ink-soft);
+  display: inline-block;
+  padding: .55rem 0;
+  text-decoration: underline;
+  text-underline-offset: .18em;
+}
+.foot-grid a:hover { color: var(--gold-hi); }
+.foot-note {
+  margin: 2.5rem 0 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(191, 167, 105, .16);
+  font-size: .85rem;
+  color: var(--ink-soft);
+  max-width: none;
+}
+
+/* ---------- responsive ---------- */
+
+@media (min-width: 700px) {
+  .flow-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(2rem, 5vw, 4.5rem); }
+  .pair { grid-template-columns: 1.15fr .85fr; }
+  .barber-grid { grid-template-columns: .8fr 1.2fr; }
+  .quote-wrap { grid-template-columns: 1.1fr .9fr; }
+  .faq { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem clamp(2rem, 5vw, 4rem); }
+}
+
+@media (min-width: 1100px) {
+  .hero .shell { padding-block: clamp(5rem, 9vw, 8.5rem) clamp(4rem, 7vw, 6.5rem); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+  .rise { opacity: 1; transform: none; }
+}
+
+/* ---------- Generated atmosphere (site-assets/generated, gemini-3-pro-image) ----------
+   Backgrounds, textures and light only. Nothing here depicts a person or a cut —
+   every photo of the craft on this site is their own work. */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: url("../assets/generated/c-tex-tile.jpg");
+  background-size: 480px;
+  opacity: .05;
+}
+
+.site-head {
+  background-image:
+    linear-gradient(rgba(25, 20, 17, .93), rgba(25, 20, 17, .96)),
+    url("../assets/generated/c-bg-warm-plaster.jpg");
+  background-size: cover;
+  background-position: 50% 50%;
+}
+
+.site-foot {
+  background-image:
+    linear-gradient(rgba(25, 20, 17, .91), rgba(25, 20, 17, .95)),
+    url("../assets/generated/c-atm-sunwash.jpg");
+  background-size: cover;
+  background-position: 50% 40%;
+}
+
+/* Service icons (src/icons.py). Inline SVG, currentColor. */
+.svc-icon { display: block; width: 24px; height: 24px; color: var(--gold); margin: 0 0 .6rem; }
+
+/* ---------- media density: seams, lookbook, cafe, strips ----------
+   Everything below is layout for more imagery. The generated assets appear
+   here only as texture, atmosphere, product still life and ornament — never
+   as this shop's work or as a photograph of this room. */
+
+/* A seam is a thin band of the tile pattern between sections, so the page
+   reads as rhythm instead of stacked flat panels. Decorative, so it is CSS
+   and an aria-hidden div rather than an <img>. */
+.seam {
+  height: clamp(3rem, 6vw, 5rem);
+  background-color: var(--ground);
+  background-image:
+    linear-gradient(90deg, var(--ground) 0%, rgba(36, 29, 23, .45) 20%, rgba(36, 29, 23, .45) 80%, var(--ground) 100%),
+    url("../assets/generated/c-tex-tile.jpg");
+  background-size: auto, 170px;
+  background-position: center;
+  border-block: 1px solid var(--hair);
+}
+.seam-paper {
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(90deg, var(--paper) 0%, rgba(229, 222, 208, .5) 20%, rgba(229, 222, 208, .5) 80%, var(--paper) 100%),
+    url("../assets/generated/c-tex-tile.jpg");
+  border-block-color: var(--hair-paper);
+}
+/* A seam always sits between two bands, so it owns the divider line itself. */
+.seam + .band { border-top: none; }
+
+/* Textured bands. The scrim is heavy enough that body text keeps its contrast
+   against the darkest pixel of the photograph underneath. */
+.band-sun {
+  background-color: var(--ground);
+  background-image:
+    linear-gradient(rgba(36, 29, 23, .87), rgba(25, 20, 17, .94)),
+    url("../assets/generated/c-atm-sunwash.jpg");
+  background-size: cover;
+  background-position: 50% 30%;
+}
+.band-travertine {
+  background-color: var(--ground);
+  background-image:
+    linear-gradient(rgba(36, 29, 23, .9), rgba(25, 20, 17, .95)),
+    url("../assets/generated/c-tex-travertine.jpg");
+  background-size: cover;
+  background-position: 50% 50%;
+}
+.band-plaster {
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(rgba(229, 222, 208, .88), rgba(229, 222, 208, .95)),
+    url("../assets/generated/c-bg-warm-plaster.jpg");
+  background-size: cover;
+  background-position: 50% 50%;
+}
+
+/* ---------- lookbook: their own cuts, uniform tiles ---------- */
+
+.lookbook {
+  display: grid;
+  gap: clamp(.65rem, 1.7vw, 1.15rem);
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+}
+.lookbook figure { margin: 0; }
+.lookbook img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--hair-paper);
+}
+.lookbook .fig-cap { margin-top: .55rem; font-size: .88rem; max-width: none; }
+
+/* ---------- work strip: small square tiles ---------- */
+
+.strip {
+  display: grid;
+  gap: .75rem;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  margin: 0 0 1rem;
+}
+.strip img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--hair);
+}
+
+/* ---------- still-life figures ---------- */
+
+/* Generated stills are 1408x768; 11/6 shows them uncropped. */
+.fig-tool img { aspect-ratio: 11 / 6; }
+.fig-tool .fig-cap { max-width: 52ch; }
+
+/* Full-width product band anchor. */
+.banner {
+  position: relative;
+  overflow: hidden;
+  border-block: 1px solid var(--hair);
+}
+.banner img {
+  width: 100%;
+  height: clamp(200px, 32vw, 380px);
+  object-fit: cover;
+  object-position: 50% 55%;
+}
+.banner-cap {
+  position: absolute;
+  inset: auto 0 0 0;
+  margin: 0;
+  padding: 3.5rem 0 1.1rem;
+  background: linear-gradient(transparent, rgba(25, 20, 17, .88));
+  color: var(--ink-soft);
+  font-family: var(--serif);
+  font-size: .95rem;
+}
+.banner-cap span { display: block; width: var(--shell); margin-inline: auto; max-width: 60ch; }
+
+/* ---------- cafe ---------- */
+
+.cafe-grid {
+  display: grid;
+  gap: clamp(1rem, 2.5vw, 1.75rem);
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  margin-top: 2rem;
+}
+.cafe-grid img {
+  width: 100%;
+  aspect-ratio: 11 / 6;
+  object-fit: cover;
+  border-radius: var(--r);
+  border: 1px solid var(--hair-paper);
+}
+.cafe-grid figure { margin: 0; }
+/* The cafe is not open. Nothing in this section is a photograph of it. */
+.cafe-note {
+  margin: 1.75rem 0 0;
+  padding: 1rem 1.25rem;
+  border-left: 3px solid var(--paper-accent);
+  background: rgba(255, 255, 255, .45);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  font-size: .92rem;
+  max-width: 70ch;
+}
+
+/* ---------- typographic panel, used where no photograph exists ---------- */
+
+.plate {
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: clamp(2rem, 6vw, 4rem) 1.5rem;
+  border-radius: var(--r);
+  border: 1px solid var(--hair-paper);
+  background:
+    radial-gradient(120% 90% at 50% 0%, rgba(191, 167, 105, .22), transparent 65%),
+    linear-gradient(160deg, #ded5c4, #cbaa93);
+  color: var(--paper-ink);
+}
+.plate .eyebrow {
+  font-family: var(--sans);
+  font-size: .72rem;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--paper-accent);
+  margin: 0 0 .6rem;
+}
+.plate p:last-child { margin-bottom: 0; }
+.plate .big {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 3.5vw + .6rem, 2.8rem);
+  line-height: 1.1;
+  margin: 0 0 .5rem;
+  max-width: 18ch;
+}
