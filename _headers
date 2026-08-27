@@ -1,0 +1,27 @@
+# Cloudflare Pages edge headers. Copied verbatim into site/ by build.py.
+# GitHub Pages could not set any of these; that is half the reason for moving.
+#
+# ponytail: NO Content-Security-Policy on purpose. Every page carries inline
+# <script type="application/ld+json"> blocks and a few inline style=""
+# attributes, so a CSP that did not break the site would need 'unsafe-inline'
+# for both script-src and style-src — which buys nothing. There is no
+# JavaScript on this site at all. Add a CSP only if the inlining ever stops.
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: accelerometer=(), autoplay=(), browsing-topics=(), camera=(), display-capture=(), encrypted-media=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), local-fonts=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), serial=(), usb=(), xr-spatial-tracking=()
+
+# Photos and share cards. Filenames are NOT content-hashed, so `immutable`
+# means a returning visitor keeps an old photo for up to a year: to replace an
+# image, ship it under a NEW filename. That is the trade this rule makes.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# HTML is the thing that changes. Short cache, always revalidated, so a copy
+# fix is live within minutes instead of being pinned in a visitor's browser.
+/
+  Cache-Control: public, max-age=600, must-revalidate
+/*.html
+  Cache-Control: public, max-age=600, must-revalidate

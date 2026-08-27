@@ -297,6 +297,57 @@ p:last-child {
   border-bottom-color: var(--gold);
 }
 
+/* The QR code lands on a phone with 812px of screen. The stacked crest lockup
+   ate 209px of that and pushed the hero's Call CTA under the sticky action
+   bar, where it was 100% invisible. On phones only, lay the masthead out as a
+   row so the address, hours and both CTAs clear the bar without scrolling.
+   Desktop keeps the centered crest lockup. */
+@media (max-width: 47.99rem) {
+  .masthead {
+    padding-block: 0.6rem;
+    text-align: left;
+  }
+
+  .masthead > .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-2);
+  }
+
+  .brand {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    column-gap: 0.65rem;
+  }
+
+  .crest {
+    width: 36px;
+    margin-inline: 0;
+    grid-row: 1 / 3;
+  }
+
+  .brand__name {
+    margin-top: 0;
+    line-height: 1.1;
+  }
+
+  .brand__sub {
+    margin-top: 0.2rem;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+  }
+
+  .nav {
+    margin-top: 0;
+  }
+
+  .hero {
+    padding-block: var(--s-3) var(--s-4);
+  }
+}
+
 /* ---------- Sections ---------- */
 
 main {
@@ -668,64 +719,6 @@ td.dur {
   color: var(--cream-dim);
 }
 
-/* ---------- FAQ ---------- */
-
-.faq {
-  max-width: 72ch;
-  margin-inline: auto;
-  border-top: 1px solid var(--line-soft);
-}
-
-.faq details {
-  border-bottom: 1px solid var(--line-soft);
-}
-
-.faq summary {
-  cursor: pointer;
-  list-style: none;
-  padding: 1.1rem 2.5rem 1.1rem 0;
-  position: relative;
-  font-family: var(--display);
-  font-size: var(--t-1);
-  line-height: 1.3;
-  color: var(--cream);
-  transition: color 0.2s var(--ease);
-}
-
-.faq summary::-webkit-details-marker {
-  display: none;
-}
-
-.faq summary:hover {
-  color: var(--gold-lift);
-}
-
-.faq summary::after {
-  content: "+";
-  position: absolute;
-  right: 0.35rem;
-  top: 50%;
-  transform: translateY(-50%);
-  font-family: var(--body);
-  font-size: 1.35rem;
-  line-height: 1;
-  color: var(--gold);
-}
-
-.faq details[open] summary {
-  color: var(--gold);
-}
-
-.faq details[open] summary::after {
-  content: "\2212";
-}
-
-.faq p {
-  margin: 0 0 1.25rem;
-  color: var(--cream-dim);
-  max-width: 68ch;
-}
-
 /* ---------- Footer ---------- */
 
 .foot {
@@ -744,19 +737,20 @@ td.dur {
 
 @media (min-width: 48rem) {
   .foot__grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
     align-items: start;
   }
 }
 
-.foot h2 {
+.foot .foot__label {
   font-size: var(--t--1);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--gold);
   font-family: var(--body);
   font-weight: 600;
-  margin-bottom: 0.75rem;
+  line-height: 1.2;
+  margin: 0 0 0.75rem;
 }
 
 .foot address {
@@ -911,7 +905,7 @@ body::before {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background-image: url("../assets/generated/a-tex-crest-border.jpg");
+  background-image: url("assets/generated/a-tex-crest-border.jpg");
   background-size: 460px;
   opacity: .085;
 }
@@ -919,7 +913,7 @@ body::before {
 .hero {
   background-image:
     linear-gradient(rgba(8, 8, 7, .88), rgba(8, 8, 7, .94)),
-    url("../assets/generated/a-bg-crest-vignette.jpg");
+    url("assets/generated/a-bg-crest-vignette.jpg");
   background-size: cover;
   background-position: 50% 40%;
 }
@@ -927,7 +921,7 @@ body::before {
 .foot {
   background-image:
     linear-gradient(rgba(1, 1, 1, .90), rgba(1, 1, 1, .95)),
-    url("../assets/generated/a-atm-gold-haze.jpg");
+    url("assets/generated/a-atm-gold-haze.jpg");
   background-size: cover;
   background-position: 50% 50%;
 }
@@ -957,27 +951,27 @@ section.band + section {
 
 .band--lounge {
   background-image: linear-gradient(rgba(4, 4, 3, 0.955), rgba(4, 4, 3, 0.975)),
-    url("../assets/generated/a-int-waiting-area.jpg");
+    url("assets/generated/a-int-waiting-area.jpg");
 }
 
 .band--chair {
   background-image: linear-gradient(rgba(4, 4, 3, 0.95), rgba(4, 4, 3, 0.975)),
-    url("../assets/generated/a-int-empty-chair.jpg");
+    url("assets/generated/a-int-empty-chair.jpg");
 }
 
 .band--mirror {
   background-image: linear-gradient(rgba(4, 4, 3, 0.945), rgba(4, 4, 3, 0.97)),
-    url("../assets/generated/a-int-mirror-counter.jpg");
+    url("assets/generated/a-int-mirror-counter.jpg");
 }
 
 .band--tools {
   background-image: linear-gradient(rgba(4, 4, 3, 0.93), rgba(4, 4, 3, 0.965)),
-    url("../assets/generated/a-tool-brushes-combs.jpg");
+    url("assets/generated/a-tool-brushes-combs.jpg");
 }
 
 .band--haze {
   background-image: linear-gradient(rgba(3, 3, 3, 0.9), rgba(3, 3, 3, 0.95)),
-    url("../assets/generated/a-atm-gold-haze.jpg");
+    url("assets/generated/a-atm-gold-haze.jpg");
 }
 
 /* ponytail: no asset behind this one — layered gradients only. Same rhythm,
@@ -1068,6 +1062,13 @@ section.band + section {
   background: var(--ink-2);
 }
 
+.strip__note {
+  margin-top: calc(var(--s-4) * -1 + 0.5rem);
+  margin-bottom: var(--s-4);
+  text-align: center;
+  font-size: var(--t--1);
+}
+
 .strip img {
   width: 100%;
   aspect-ratio: 16 / 10;
@@ -1128,3 +1129,4 @@ section.band + section {
 .service .svc-icon {
   margin: 0;
 }
+
