@@ -220,47 +220,65 @@ p:last-child {
 
 .crest {
   display: block;
-  width: clamp(44px, 11vw, 62px);
+  width: clamp(40px, 3.6vw + 20px, 76px);
   height: auto;
-  margin-inline: auto;
+  grid-row: 1 / 3;
+  align-self: center;
 }
 
 /* ---------- Header ---------- */
 
+/* The masthead paint is deliberately translucent: body::before already lays the
+   crest damask across the whole page, and the old opaque gradient was covering it
+   up, leaving the header as the one band on the site with no material in it.
+   The radial is a pool of light behind the crest, not a texture of its own. */
 .masthead {
   border-bottom: 1px solid var(--line-soft);
-  background: linear-gradient(180deg, #010101, var(--ink));
-  padding-block: clamp(1rem, 3.5vw, 1.75rem) var(--s-2);
+  background:
+    radial-gradient(120% 150% at 50% 0%, rgba(191, 167, 105, 0.06), rgba(191, 167, 105, 0) 62%),
+    linear-gradient(180deg, rgba(1, 1, 1, 0.92), rgba(8, 8, 7, 0.86));
+  padding-block: clamp(0.85rem, 2.2vw, 1.5rem) 0;
   text-align: center;
 }
 
 .brand {
-  display: inline-block;
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  column-gap: clamp(0.7rem, 1.5vw, 1.15rem);
+  text-align: left;
   text-decoration: none;
   color: inherit;
 }
 
 .brand__name {
   display: block;
+  margin: 0 -0.1em 0 0;      /* trailing letter-space compensation */
   font-family: var(--display);
-  font-size: clamp(1.15rem, 0.95rem + 0.9vw, 1.5rem);
-  letter-spacing: 0.16em;
+  font-weight: 400;
+  font-size: clamp(1.35rem, 0.95rem + 1.55vw, 2.35rem);
+  line-height: 1.04;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--gold);
-  margin-top: 0.7rem;
 }
 
 .brand__sub {
   display: block;
-  font-size: 0.72rem;
-  letter-spacing: 0.34em;
+  margin: 0.42em -0.28em 0 0; /* tracking tuned so this line matches .brand__name's width */
+  font-size: clamp(0.6rem, 0.42rem + 0.4vw, 0.78rem);
+  line-height: 1.15;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--cream-dim);
-  margin-top: 0.45rem;
 }
 
+/* The hairline is the ornament, and it earns its place: it is the only element
+   that spans the full wrap, so it converts the dead horizontal band into
+   structure and separates identity from navigation. No extra DOM. */
 .nav {
-  margin-top: clamp(1rem, 3vw, 1.75rem);
+  margin-top: clamp(0.85rem, 2vw, 1.35rem);
+  border-top: 1px solid var(--line-soft);
 }
 
 .nav ul {
@@ -268,7 +286,7 @@ p:last-child {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0.2rem clamp(0.75rem, 3vw, 2.1rem);
+  gap: 0 clamp(1.5rem, 5vw, 3.25rem);
   margin: 0;
   padding: 0;
 }
@@ -276,12 +294,12 @@ p:last-child {
 .nav a {
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
+  min-height: 46px;
   padding: 0.4rem 0.15rem;
   color: var(--cream);
   text-decoration: none;
-  font-size: clamp(0.78rem, 0.6rem + 0.5vw, 0.875rem);
-  letter-spacing: 0.14em;
+  font-size: clamp(0.76rem, 0.62rem + 0.35vw, 0.85rem);
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   border-bottom: 1px solid transparent;
   transition: color 0.25s var(--ease), border-color 0.25s var(--ease);
@@ -301,10 +319,10 @@ p:last-child {
    ate 209px of that and pushed the hero's Call CTA under the sticky action
    bar, where it was 100% invisible. On phones only, lay the masthead out as a
    row so the address, hours and both CTAs clear the bar without scrolling.
-   Desktop keeps the centered crest lockup. */
+   Desktop runs the same horizontal lockup, scaled up and centred. */
 @media (max-width: 47.99rem) {
   .masthead {
-    padding-block: 0.6rem;
+    padding-block: 0.55rem 0;
     text-align: left;
   }
 
@@ -315,32 +333,54 @@ p:last-child {
     gap: var(--s-2);
   }
 
-  .brand {
-    display: grid;
-    grid-template-columns: auto auto;
-    align-items: center;
-    column-gap: 0.65rem;
+  .crest {
+    width: 40px;
   }
 
-  .crest {
-    width: 36px;
-    margin-inline: 0;
-    grid-row: 1 / 3;
+  /* At 40px on a 1dppx screen the 2-unit dots land on 1.25 device px and the
+     rings go mushy. Thicken the strokes here so the markup stays identical on
+     all five pages. */
+  .crest__dots {
+    stroke-width: 3;
+    stroke-dasharray: 0.01 7.54;
+  }
+
+  .crest__edge,
+  .crest__ring {
+    stroke-width: 1.3;
+  }
+
+  .brand {
+    column-gap: 0.62rem;
   }
 
   .brand__name {
-    margin-top: 0;
+    font-size: 1.16rem;
     line-height: 1.1;
+    letter-spacing: 0.11em;
+    margin-right: -0.11em;
   }
 
   .brand__sub {
-    margin-top: 0.2rem;
     font-size: 0.58rem;
     letter-spacing: 0.2em;
+    margin-right: -0.2em;
+    margin-top: 0.34em;
   }
 
   .nav {
     margin-top: 0;
+    border-top: 0;
+  }
+
+  .nav ul {
+    gap: 0 clamp(0.75rem, 3vw, 2.1rem);
+  }
+
+  .nav a {
+    min-height: 44px;
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
   }
 
   .hero {
@@ -698,25 +738,58 @@ td.dur {
 
 /* ---------- Booking routes ---------- */
 
+/* Flex column so the two cards align structurally: the description is the only
+   child that grows, the button is pushed to a shared bottom baseline, and the
+   note rides with it. Works for any description length -- no matched heights.
+   align-self: stretch is part of the fix, not decoration: shrink-to-fit made the
+   two gold blocks 241px and 338px wide, which reads as misaligned on its own. */
 .route {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
   border: 1px solid var(--line-soft);
   background: var(--ink-2);
   padding: clamp(1.4rem, 4vw, 2.4rem);
   text-align: center;
 }
 
-.route h2 {
-  margin-bottom: var(--s-1);
+.route > * {
+  margin: 0;
+}
+
+.route > p:not(.route__note) {
+  flex: 1 1 auto;
 }
 
 .route .btn {
-  margin-top: var(--s-3);
+  margin-top: auto;
+  align-self: stretch;
 }
 
 .route__note {
-  margin-top: var(--s-2);
   font-size: var(--t--1);
   color: var(--cream-dim);
+}
+
+/* Subgrid puts both buttons in one shared row track, so they also match in
+   height across the 768-955px band where Darienne's longer label wraps. The
+   flex rules above are the fallback and already share the bottom baseline.
+   Scoped to the two sections that actually hold .route cards so it cannot
+   touch .duo on the barbers, contact, services or cafe blocks.
+   Row counts differ: book.html's cards carry a .route__note (4 rows), the
+   home page's do not (3 rows). Without the matching count the shared button
+   track is lost and the wrapped label lifts one button by 6px. */
+@supports (grid-template-rows: subgrid) {
+  @media (min-width: 48rem) {
+    #routes .duo { grid-template-rows: auto 1fr auto auto; }
+    #routes .route { display: grid; grid-row: span 4; grid-template-rows: subgrid; }
+
+    #barbers .duo { grid-template-rows: auto 1fr auto; }
+    #barbers .route { display: grid; grid-row: span 3; grid-template-rows: subgrid; }
+
+    #routes .route .btn,
+    #barbers .route .btn { margin-top: 0; }
+  }
 }
 
 /* ---------- Footer ---------- */
@@ -983,44 +1056,70 @@ section.band + section {
 }
 
 /* ---------- Lookbook ----------
-   Their own cuts, nothing else. Uniform tiles so the work is compared like for
-   like and no single photo gets promoted over another. */
-
-/* ponytail: CSS columns, not grid. Four of these seven photos carry the shop's
-   own caption overlay burned in; a fixed aspect-ratio crop cut through the
-   words. Columns let every frame keep its native ratio, so nothing is sliced
-   mid-sentence and no gaps open at the end of a row. */
+   Their own cuts, nothing else. A real grid at a uniform square crop: six of the
+   eight photos are within 13% of square already, so 1:1 is near-lossless for most
+   of the set and reduces the crop decision to the two 4:5 portraits, which get an
+   explicit vertical anchor below. 4:5 was rejected -- it would take ~20% off the
+   width of six photos, and one of them is a side-by-side before/after where that
+   cuts through both heads. */
 .lookbook {
-  columns: 2;
-  column-gap: clamp(0.6rem, 2vw, 1.15rem);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(0.65rem, 1.9vw, 1.15rem);
 }
 
-@media (min-width: 46rem) {
+@media (min-width: 34rem) {
   .lookbook {
-    columns: 4;
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 60rem) {
+  .lookbook {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
 .lookbook .frame {
   padding: 5px;
-  break-inside: avoid;
-  margin-bottom: clamp(0.6rem, 2vw, 1.15rem);
 }
 
 .lookbook img {
   width: 100%;
-}
-
-/* ponytail: one photo was posted with its caption banner already cut off at
-   the frame edge. Trim the dead strip in CSS rather than re-encoding their
-   asset — the crop is display-only and the file stays untouched. */
-.lookbook .frame--crop img {
-  aspect-ratio: 1284 / 1500;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
-  object-position: 50% 0;
+  object-position: 50% 50%;
 }
 
+/* Four photos whose subject is not at the geometric centre. See
+   docs/visual-fix-spec.md section C.2 for the reasoning and the tested
+   alternatives. Portrait sources crop vertically, so the percentage is the
+   share of the excess taken off the TOP -- keep it low enough that the crown
+   of the head stays in frame. */
+.lookbook img[src$="ig-DTgzfnOjevf.jpg"] {
+  object-position: 50% 0%;
+}
+
+.lookbook img[src$="ig-DS1TBEsjSCg.jpg"] {
+  object-position: 50% 20%;
+}
+
+.lookbook img[src$="ig-DSu-vsNk8QL-crop.jpg"] {
+  object-position: 50% 15%;
+}
+
+/* Landscape source: the square crop takes 144px off the width. Anchor left so
+   the man-bun the alt text names survives; the wall on the right is what goes. */
+.lookbook img[src$="ig-DSvAOLpkxG1-crop.jpg"] {
+  object-position: 0% 50%;
+}
+
+/* Reserve two caption lines so the frames in a row are identical rectangles
+   rather than ragged ones. 2.9em = 2 x the 1.45 line-height declared below, plus
+   the 0.7rem of vertical padding, because box-sizing is border-box site-wide --
+   a bare 2.9em reserves only 1.4 lines and the second one still pushes a row. */
 .lookbook figcaption {
+  min-height: calc(2.9em + 0.7rem);
   padding: 0.55rem 0.2rem 0.15rem;
   font-size: 0.78rem;
   line-height: 1.45;
