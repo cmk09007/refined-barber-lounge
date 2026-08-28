@@ -471,6 +471,15 @@ section + section {
   .actions {
     justify-content: flex-start;
   }
+
+  /* ponytail: a centred wrap centres its buttons. Above 62rem the rule above
+     left-aligns every .actions row, which is right for the two-column heroes
+     (copy beside a photo) and wrong for the centred ones — the buttons pinned
+     61px left of the heading. Fixing it here retires seven inline
+     justify-content patches that were papering over this one rule. */
+  .center .actions {
+    justify-content: center;
+  }
 }
 
 .btn {
@@ -560,8 +569,17 @@ section + section {
 
 .gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  grid-template-columns: 1fr;
   gap: clamp(0.9rem, 2.5vw, 1.6rem);
+}
+
+/* ponytail: fixed 2 columns, not auto-fit. The one gallery on the site holds
+   four photos; auto-fit packed three across and orphaned the fourth on its
+   own row. Two columns gives a clean 2x2. */
+@media (min-width: 34rem) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 /* ---------- Pull quote ---------- */
