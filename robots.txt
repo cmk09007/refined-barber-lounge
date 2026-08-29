@@ -22,4 +22,4 @@ Allow: /
 User-agent: Applebot-Extended
 Allow: /
 
-Sitemap: https://cmk09007.github.io/refined-barber-lounge/sitemap.xml
+Sitemap: https://refinedbarberlounge.com/sitemap.xml

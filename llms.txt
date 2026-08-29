@@ -8,15 +8,15 @@
 - Hours: Monday through Saturday, 11:00 AM to 6:30 PM. Closed Sunday.
 - Parking: Free parking lot at the shop, plus street parking on N. Nebraska Ave. Nothing to pay, nothing to validate.
 - Google listing: https://maps.google.com/?cid=11903748570000391089
-- Website: https://cmk09007.github.io/refined-barber-lounge/
+- Website: https://refinedbarberlounge.com/
 
 ## Pages
 
-- https://cmk09007.github.io/refined-barber-lounge/: what this business is, where it is, the lookbook, and how to reach it.
-- https://cmk09007.github.io/refined-barber-lounge/services.html: what the shop does and what a haircut includes.
-- https://cmk09007.github.io/refined-barber-lounge/barbers.html: who the barbers are and how to book each one.
-- https://cmk09007.github.io/refined-barber-lounge/book.html: how to book each barber, the walk-in policy, and cancellations.
-- https://cmk09007.github.io/refined-barber-lounge/contact.html: the address, hours, parking, and directions.
+- https://refinedbarberlounge.com/: what this business is, where it is, the lookbook, and how to reach it.
+- https://refinedbarberlounge.com/services.html: what the shop does and what a haircut includes.
+- https://refinedbarberlounge.com/barbers.html: who the barbers are and how to book each one.
+- https://refinedbarberlounge.com/book.html: how to book each barber, the walk-in policy, and cancellations.
+- https://refinedbarberlounge.com/contact.html: the address, hours, parking, and directions.
 
 ## Key answers
 
@@ -107,4 +107,4 @@ Each barber keeps a separate calendar on a separate app. Book the barber, not th
 - There is no email address for this business. Phone or the booking apps are the only contact methods.
 - refinedbarbers.net is a different, unrelated shop in Houston, TX.
 
-Last updated: 2026-08-27
+Last updated: 2026-08-28
