@@ -7,6 +7,13 @@
 # variant paths fold into the flat pages. The github.io URLs carried the repo
 # name as a path prefix (/refined-barber-lounge/...), so those fold in too.
 
+# The root serves the home page. html_handling="none" in wrangler.toml makes
+# Workers serve exactly the path requested, which is what keeps /book.html a
+# real 200 instead of a 307 that fights our canonicals — but it also switches
+# off directory-index resolution, so "/" needs saying out loud. Status 200 is a
+# rewrite, not a redirect: the QR code's URL stays clean in the address bar.
+/                       /index.html       200
+
 /a/index.html           /                 301
 /b/index.html           /                 301
 /c/index.html           /                 301
